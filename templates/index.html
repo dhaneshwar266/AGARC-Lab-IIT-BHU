@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDRT : AGARC - IIT BHU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="static/images/logo.jpg" type="image/x-icon">
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo" style="display: flex; align-items: center; justify-content: center;">
+                <img src="{{ url_for('static', filename='images/iitbhu.gif') }}" alt="Logo" style="height: 70px;">
+            </a>
+            <a href="{{ url_for('index') }}" class="logo" style="display: flex; align-items: center; justify-content: center;">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" style="height: 70px; margin-right: 15px;">
+                <span style="font-size: 1.5rem;">CDRT : AGARC</span>
+            </a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="nav-links">
+                <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+                <a href="{{ url_for('about') }}" class="nav-link">About the Lab</a>
+                <a href="{{ url_for('research') }}" class="nav-link">Research/Projects</a>
+                <a href="{{ url_for('team') }}" class="nav-link">Team</a>
+                <a href="{{ url_for('gallery') }}" class="nav-link">Gallery</a>
+                <a href="{{ url_for('contact') }}" class="nav-link">Contact Us</a>
+                <a href="{{ url_for('admin_login') }}" class="nav-link">Admin Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-home" style="background-image: url('static/images/cover photo.jpg'); background-size:contain; background-position: center; position: static;">
+        <!-- <div class="hero-content" style="position: relative; z-index: 1; background-color: rgba(0, 0, 0, 0.5); padding: 2rem; border-radius: 10px;">
+            <h1 class="typing-animation" data-text="AERO GROUND AUTONOMY RESEARCH CENTER">AERO GROUND AUTONOMY RESEARCH CENTER</h1>
+            <p>Advancing Drone Technology Through Innovation and Research</p>
+            <div style="margin-top: 15rem;">
+                <a href="{{ url_for('about') }}" class="btn">Learn More</a>
+            </div>
+        </div>    -->
+    </section>
+
+    <!-- Sliding Images Section -->
+    <section class="sliding-images">
+        <div class="image-row">
+            <div class="slider-track">
+                {% for slide in slides %}
+                <img src="{{ slide.image_url }}" class="slide-img">
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Notice Board Section -->
+    <section class="section bg-light" id="research-preview">
+        <div class="container">
+                <!-- Notice Board -->
+                <div class="col-lg-8">
+                    <div class="notice-board-container">
+                        <div class="notice-header-section">
+                            <h2 class="section-title">Notice Board</h2>
+                            <div class="notice-divider"></div>
+                        </div>
+                        <div class="notice-board">
+                            {% for notice in notices %}
+                            <div class="notice-item">
+                                <div class="notice-header">
+                                    <div class="notice-title-section">
+                                        <i class="fas fa-bullhorn notice-icon"></i>
+                                        <h4 class="notice-title">{{ notice.title }}</h4>
+                                    </div>
+                                    <span class="notice-date">
+                                        <i class="far fa-calendar-alt"></i>
+                                        {{ notice.date }}
+                                    </span>
+                                </div>
+                                <div class="notice-content">
+                                    <p>{{ notice.content }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="{{ url_for('notice') }}" class="btn btn-primary view-all-btn">
+                                <i class="fas fa-list me-2"></i>View All Notices
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Drone Showcase Section -->
+    <section class="section-spacing bg-gradient-to-b from-gray-900 to-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Experimental Setups</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {% for drone in drones %}
+                <a href="{{ url_for('drone_details', drone_id=drone.id) }}" class="drone-card">
+                    <div class="drone-image">
+                        <img src="{{ drone.image_url }}" alt="{{ drone.title }}">
+                    </div>
+                    <h2 class="text-lg font-orbitron mb-1">{{ drone.title }}</h2>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Preview -->
+    <section class="section" id="contact-preview">
+        <h2 class="section-title">Get in Touch</h2>
+        <div class="contact-preview">
+            <div class="contact-info">
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Department of Electrical Engineering, <br>IIT (BHU) Varanasi</br></p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>shyamkamal.eee@iitbhu.ac.in<br>agarc.cdrt@gmail.com </p>
+                </div>
+                <div class="info-item">
+                    <i class="fab fa-linkedin"></i>
+                    <p>LinkedIn</p>
+                </div>
+            </div>
+            <div style="margin-top: 2rem;">
+                <a href="{{ url_for('contact') }}" class="btn">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AGARC Lab</h3>
+                <p>Advancing drone & mobile robots technology through innovation and research.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('research') }}">Research</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/agarc-2a5b5b367/"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:agarc.cdrt@gmail.com"><i class="fab fa-google"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; CDRT Lab IIT BHU. All rights reserved.</p>
+            <div class="counter-container" style="justify-content: center; margin: 0 auto;">
+                <span class="green-dot"></span>
+                <p><span id="visit-count">{{ visit_count }}</span> views</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+</html>

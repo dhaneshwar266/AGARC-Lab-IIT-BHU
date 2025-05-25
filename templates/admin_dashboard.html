@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CDRT Lab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="static/images/logo.jpg" type="image/x-icon">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background-color: #343a40;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        .sidebar .active {
+            background-color: #0d6efd;
+        }
+        .main-content {
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h3 class="text-white text-center mb-4">Admin Panel</h3>
+                <nav>
+                    <a href="/admin_dashboard" class="active">
+                        <i class="fas fa-home me-2"></i> Dashboard
+                    </a>
+                    <a href="/admin_home">
+                        <i class="fas fa-home me-2"></i> Home
+                    </a>
+                    <a href="/admin_notice">
+                        <i class="fas fa-bullhorn me-2"></i> Notices
+                    </a>
+                    <a href="/admin_team">
+                        <i class="fas fa-users me-2"></i> Team
+                    </a>
+                    <a href="/admin_gallery">
+                        <i class="fas fa-images me-2"></i> Gallery
+                    </a>
+                    <a href="/admin_research">
+                        <i class="fas fa-flask me-2"></i> Research
+                    </a>
+                    <a href="/admin_about">
+                        <i class="fas fa-info-circle me-2"></i> About
+                    </a>
+                    <a href="/admin_messages">
+                        <i class="fas fa-envelope me-2"></i> Messages
+                    </a>
+                    <a href="/admin_logout" class="mt-5">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <h2 class="mb-4">Dashboard Overview</h2>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-envelope text-primary me-2"></i>
+                                    New Messages
+                                </h5>
+                                <p class="card-text display-4">{{ new_messages_count }}</p>
+                                <a href="/admin_messages" class="btn btn-primary">View Messages</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-bullhorn text-success me-2"></i>
+                                    Active Notices
+                                </h5>
+                                <p class="card-text display-4">{{ notices_count }}</p>
+                                <a href="/admin_notice" class="btn btn-success">Manage Notices</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-users text-info me-2"></i>
+                                    Team Members
+                                </h5>
+                                <p class="card-text display-4">{{ team_count }}</p>
+                                <a href="/admin_team" class="btn btn-info">Manage Team</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Recent Messages</h5>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Subject</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for message in recent_messages %}
+                                            <tr>
+                                                <td>{{ message.name }}</td>
+                                                <td>{{ message.email }}</td>
+                                                <td>{{ message.subject }}</td>
+                                                <td>{{ message.timestamp }}</td>
+                                                <td>
+                                                    <a href="/admin_messages" class="btn btn-sm btn-primary">View</a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team - CDRT : AGARC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="static/images/logo.jpg" type="image/x-icon">
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo" style="display: flex; align-items: center; justify-content: center;">
+                <img src="{{ url_for('static', filename='images/iitbhu.gif') }}" alt="Logo" style="height: 70px;">
+            </a>
+            <a href="{{ url_for('index') }}" class="logo" style="display: flex; align-items: center; justify-content: center;">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" style="height: 70px; margin-right: 15px;">
+                <span style="font-size: 1.5rem;">CDRT : AGARC</span>
+            </a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="nav-links">
+                <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+                <a href="{{ url_for('about') }}" class="nav-link">About the Lab</a>
+                <a href="{{ url_for('research') }}" class="nav-link">Research/Projects</a>
+                <a href="{{ url_for('team') }}" class="nav-link">Team</a>
+                <a href="{{ url_for('gallery') }}" class="nav-link">Gallery</a>
+                <a href="{{ url_for('contact') }}" class="nav-link">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero team-hero">
+        <div class="hero-content">
+            <h1>Our Team</h1>
+            <p class="subtitle">Meet the Minds Behind Our Innovation</p>
+            <div class="team-showcase">
+                {% if team_leads %}
+                <div class="team-leads-grid">
+                    {% for lead in team_leads %}
+                    <div class="team-lead">
+                        {% if lead.linkedin %}
+                        <a href="{{ lead.linkedin }}">
+                        {% endif %}
+                        <img src="{{ lead.image_url }}" alt="{{ lead.name }}">
+                        {% if lead.linkedin %}
+                        </a>
+                        {% endif %}
+                        <div class="lead-info">
+                            <h3>{{ lead.name }}</h3>
+                            <p>{{ lead.role }}</p>
+                            <p>{{ lead.department }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Categories -->
+    <section class="section">
+        <h2 class="section-title">Faculty Members</h2>
+
+        <!-- Faculty Grid -->
+        <div class="team-grid">
+            {% for member in faculty_members %}
+            <div class="team-member" data-category="{{ member.role|lower }}">
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="{{ member.image_url }}" alt="{{ member.name }}" loading="lazy">
+                        <div class="member-overlay">
+                            <div class="social-links">
+                                {% if member.linkedin %}
+                                <a href="{{ member.linkedin }}" target="_blank" class="social-link" title="LinkedIn">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                {% endif %}
+                                
+                                {% if member.email %}
+                                <a href="mailto:{{ member.email }}" class="social-link" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">{{ member.name }}</h3>
+                        <p class="member-title">{{ member.role }}</p>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Student Members</h2>
+
+        <!-- Team Grid -->
+        <div class="team-grid">
+            {% for member in team_members %}
+            <div class="team-member" data-category="{{ member.role|lower }}">
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="{{ member.image_url }}" alt="{{ member.name }}" loading="lazy">
+                        <div class="member-overlay">
+                            <div class="social-links">
+                                {% if member.linkedin %}
+                                <a href="{{ member.linkedin }}" target="_blank" class="social-link" title="LinkedIn">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                {% endif %}
+                                
+                                {% if member.email %}
+                                <a href="mailto:{{ member.email }}" class="social-link" title="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">{{ member.name }}</h3>
+                        <p class="member-title">{{ member.role }}</p>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Pass-out Members Section -->
+    <div class="container mt-5">
+        <h2 class="section-title">Former Students</h2>
+        <div class="team-grid">
+            {% for member in passout_members %}
+            <div class="team-member">
+                <div class="card h-100">
+                    {% if member.image_url %}
+                    <img src="{{ member.image_url }}" class="card-img-top" alt="{{ member.name }}" style="height: 300px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ member.name }}</h5>
+                        <p class="card-text">{{ member.role }}</p>
+                        <p class="card-text"><small class="text-muted">Pass-out Year: {{ member.passout_year }}</small></p>
+                        
+                        <div class="social-links mt-3">
+                            {% if member.email %}
+                            <a href="mailto:{{ member.email }}" class="text-dark me-3">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            {% endif %}
+                            {% if member.linkedin %}
+                            <a href="{{ member.linkedin }}" target="_blank" class="text-dark me-3">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Join Our Team Section -->
+    <section class="section bg-light">
+        <div class="join-team">
+            <h2>Join Our Team</h2>
+            <p>We're always looking for talented individuals to join our innovative team.</p>
+            <div class="positions-grid">
+                <div class="position-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Research Purpose</h3>
+                    <p>Join our research team and contribute to cutting-edge drone technology.</p>
+                    
+                </div>
+                <div class="position-card">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>Student Opportunities</h3>
+                    <p>Internships and research assistant positions for students.</p>
+                    
+                </div>
+                <div class="position-card">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Collaborations</h3>
+                    <p>Partner with us on innovative projects and research.</p>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AGARC Lab</h3>
+                <p>Advancing drone & mobile robots technology through innovation and research.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('research') }}">Research</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/agarc-2a5b5b367/"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:agarc.cdrt@gmail.com"><i class="fab fa-google"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; CDRT Lab IIT BHU. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+</html> 

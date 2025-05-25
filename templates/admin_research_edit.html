@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Publication - CDRT Lab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background-color: #343a40;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        .sidebar .active {
+            background-color: #0d6efd;
+        }
+        .main-content {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h3 class="text-white text-center mb-4">Admin Panel</h3>
+                <nav>
+                    <a href="/admin_dashboard">
+                        <i class="fas fa-home me-2"></i> Dashboard
+                    </a>
+                    <a href="/admin_messages">
+                        <i class="fas fa-envelope me-2"></i> Messages
+                    </a>
+                    <a href="/admin_notice">
+                        <i class="fas fa-bullhorn me-2"></i> Notices
+                    </a>
+                    <a href="/admin_team">
+                        <i class="fas fa-users me-2"></i> Team
+                    </a>
+                    <a href="/admin_gallery">
+                        <i class="fas fa-images me-2"></i> Gallery
+                    </a>
+                    <a href="/admin_research" class="active">
+                        <i class="fas fa-flask me-2"></i> Research
+                    </a>
+                    <a href="/admin_about">
+                        <i class="fas fa-info-circle me-2"></i> About
+                    </a>
+                    <a href="/admin_logout" class="mt-5">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Edit Publication</h2>
+                    <a href="/admin_research" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Research
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <form action="/admin_research/edit_publication/{{ publication.id }}" method="POST">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" value="{{ publication.title }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="authors" class="form-label">Authors</label>
+                                <input type="text" class="form-control" id="authors" name="authors" value="{{ publication.authors }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="type" class="form-label">Type</label>
+                                <select class="form-select" id="type" name="type" required>
+                                    <option value="Journal" {% if publication.type == 'Journal' %}selected{% endif %}>Journal Article</option>
+                                    <option value="Conference" {% if publication.type == 'Conference' %}selected{% endif %}>Conference Paper</option>
+                                    <option value="Book" {% if publication.type == 'Book' %}selected{% endif %}>Book Chapter</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="link" class="form-label">Link</label>
+                                <input type="url" class="form-control" id="link" name="link" value="{{ publication.link }}">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Created Date</label>
+                                <p class="form-control-plaintext">{{ publication.date }}</p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Save Changes
+                                </button>
+                                <a href="/admin_research" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

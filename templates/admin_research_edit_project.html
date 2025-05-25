@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Project - CDRT : AGARC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="static/images/logo.jpg" type="image/x-icon">
+    <style>
+        .edit-project-section {
+            padding: 100px 2rem;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .edit-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .edit-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .current-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .file-input-container {
+            margin-top: 1rem;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .file-input-label:hover {
+            background: #0056b3;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .related-media-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #ddd;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .media-item {
+            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .media-item img, .media-item video {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .delete-media {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-submit {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo" style="display: flex; align-items: center; justify-content: center;">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" style="height: 60px; margin-right: 15px;">
+                <span style="font-size: 1.5rem;">CDRT : AGARC</span>
+            </a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="nav-links">
+                <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+                <a href="{{ url_for('about') }}" class="nav-link">About the Lab</a>
+                <a href="{{ url_for('research') }}" class="nav-link">Research/Projects</a>
+                <a href="{{ url_for('team') }}" class="nav-link">Team</a>
+                <a href="{{ url_for('gallery') }}" class="nav-link">Gallery</a>
+                <a href="{{ url_for('contact') }}" class="nav-link">Contact Us</a>
+                <a href="{{ url_for('admin_login') }}" class="nav-link">Admin Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Edit Project Section -->
+    <section class="edit-project-section">
+        <div class="edit-container">
+            <form class="edit-form" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Project Title</label>
+                    <input type="text" id="title" name="title" class="form-control" value="{{ project.title }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" class="form-control" required>{{ project.description }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="creator_name">Creator Name</label>
+                    <input type="text" id="creator_name" name="creator_name" class="form-control" value="{{ project.creator_name }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Current Main Image</label>
+                    <img src="{{ project.image_url }}" alt="Current project image" class="current-image">
+                    <div class="file-input-container">
+                        <label class="file-input-label">
+                            Update Main Image
+                            <input type="file" name="image" class="file-input" accept="image/*">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="related-media-section">
+                    <h3>Current Related Media</h3>
+                    <div class="media-grid">
+                        {% for media in project.related_media %}
+                        <div class="media-item">
+                            {% if media.type == 'video' %}
+                            <video controls>
+                                <source src="{{ media.url }}" type="video/mp4">
+                            </video>
+                            {% else %}
+                            <img src="{{ media.url }}" alt="Related media">
+                            {% endif %}
+                            <button type="button" class="delete-media" onclick="deleteMedia('{{ media.id }}')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label>Add New Related Media</label>
+                        <div class="file-input-container">
+                            <label class="file-input-label">
+                                Add Images
+                                <input type="file" name="related_images[]" class="file-input" accept="image/*" multiple>
+                            </label>
+                            <small class="text-muted">You can select multiple images</small>
+                            <label class="file-input-label" style="margin-left: 1rem;">
+                                Add Videos
+                                <input type="file" name="related_videos[]" class="file-input" accept="video/*" multiple>
+                            </label>
+                            <small class="text-muted">You can select multiple videos</small>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Update Project</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        function deleteMedia(mediaId) {
+            if (confirm('Are you sure you want to delete this media?')) {
+                fetch(`/admin_research/delete_project_media/${mediaId}`, {
+                    method: 'DELETE',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error deleting media');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error deleting media');
+                });
+            }
+        }
+    </script>
+</body>
+</html> 

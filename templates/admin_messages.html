@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Messages - CDRT : AGARC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="static/images/logo.jpg" type="image/x-icon">
+</head>
+<body class="admin-messages-page">
+    <div class="admin-header">
+        <div class="header-content">
+            <div class="header-left">
+                <i class="fas fa-envelope"></i>
+                <h2>Messages</h2>
+            </div>
+            <a href="{{ url_for('admin_logout') }}" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </div>
+    </div>
+
+    <div class="messages-container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message-card">
+                    <div class="message-header">
+                        <div class="sender-info">
+                            <i class="fas fa-user-circle"></i>
+                            <div>
+                                <h4>{{ message.name }}</h4>
+                                <span class="email">{{ message.email }}</span>
+                            </div>
+                        </div>
+                        <div class="message-actions">
+                            <span class="timestamp">
+                                <i class="far fa-clock"></i>
+                                {{ message.timestamp }}
+                            </span>
+                            <form action="{{ url_for('delete_message', message_id=message.id) }}" method="POST" class="delete-form" onsubmit="return confirmDelete()">
+                                <button type="submit" class="delete-btn">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="message-subject">
+                        <i class="fas fa-tag"></i>
+                        <span>{{ message.subject }}</span>
+                    </div>
+                    <div class="message-content">
+                        <i class="fas fa-comment"></i>
+                        <p>{{ message.message }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-messages">
+                <i class="fas fa-inbox"></i>
+                <p>No messages found</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function confirmDelete() {
+            return confirm('Are you sure you want to delete this message? This action cannot be undone.');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About the Lab - CDRT : AGARC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="static/images/logo.jpg" type="image/x-icon">
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo" style="display: flex; align-items: center; justify-content: center;">
+                <img src="{{ url_for('static', filename='images/iitbhu.gif') }}" alt="Logo" style="height: 70px;">
+            </a>
+            <a href="{{ url_for('index') }}" class="logo" style="display: flex; align-items: center; justify-content: center;">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" style="height: 70px; margin-right: 15px;">
+                <span style="font-size: 1.5rem;">CDRT : AGARC</span>
+            </a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="nav-links">
+                <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+                <a href="{{ url_for('about') }}" class="nav-link active">About the Lab</a>
+                <a href="{{ url_for('research') }}" class="nav-link">Research/Projects</a>
+                <a href="{{ url_for('team') }}" class="nav-link">Team</a>
+                <a href="{{ url_for('gallery') }}" class="nav-link">Gallery</a>
+                <a href="{{ url_for('contact') }}" class="nav-link">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero about-hero">
+        <div class="hero-split">
+            <div class="hero-text">
+                <h1>About Our Lab</h1>
+                <p class="subtitle">Advancing Drone & Mobile Robots Technology Research</p>
+                <!-- <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Research Papers</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Active Projects</span>
+                    </div>
+                </div> -->
+            </div>
+            <div class="hero-image">
+                <img src="static/images/lab.jpg" alt="Lab Facility">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="section">
+        <div class="about-grid">
+            <div class="about-text">
+                <h2>Welcom to <b>AGARC</b> </h2>
+                <p>The <b>Aero-Ground Autonomy Research Center</b> at the Department of Electrical Engineering, IIT (BHU) Varanasi is a pioneering hub for advanced research in autonomous systems. Established through the prestigious <b>I-DAPT HUB Foundation</b> grant under the project entitled <b>"Centre for Development of Drone Related Technologies"</b>,2023, and in strategic collaboration with Quanser, the centre operates under the leadership of <b>Prof. Shyam Kamal</b>, the Principal Investigator.
+This centre stands at the forefront of innovation in aerial and ground robotics, intelligent control systems, and AI-driven autonomy. With a vibrant team of PhD scholars, MTech researchers, and several BTech project groups, it fosters a dynamic environment for cutting-edge research and hands-on technological development. Utilizing state-of-the-art platforms such as <b>Quanser  QDrone2 and QBot Platform</b>, the centre is advancing the frontiers of swarm robotics, machine learning, and real-time autonomous navigation</p>
+                <br><h2>Our Facilities</h2>
+                <div class="facilities-grid">
+                    <div class="facility-item">
+                        <i class="fas fa-helicopter" title="UAV"></i>
+                        <h3>UAV & UGV Platforms</h3>
+                        <p>Advanced Unmanned Arial Vehical & Unmanned Ground Vehicle research platforms equipped with multisensor fusion and precision control</p>
+                    </div>
+                    <div class="facility-item">
+                        <i class="fas fa-users-cog"></i>
+                        <h3>Colaborative Research & Testing Facilities</h3>
+                        <p>Industry-academia collaborative research hub advancing autonomous systems through shared innovation</p>
+                    </div>
+                    <div class="facility-item">
+                        <i class="fas fa-crosshairs"></i>
+                        <h3>High Precision Autonomous Systems</h3>
+                        <p>High-resolution cameras and sensors</p>
+                    </div>
+                    <div class="facility-item">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Software Lab</h3>
+                        <p>Advanced programming and simulation tools</p>
+                    </div>
+                </div>
+
+                <h2>Our Approach</h2>
+                <p>We combine theoretical knowledge with practical experience, ensuring our students and researchers are well-equipped to tackle real-world challenges in drone technology. Our approach includes:</p>
+                <ul class="approach-list">
+                    <li>Hands-on training with cutting-edge equipment</li>
+                    <li>Collaborative research projects</li>
+                    <li>Industry partnerships and internships</li>
+                    <li>Regular workshops and seminars</li>
+                </ul>
+            </div>
+            <!-- <div class="about-images">
+                <div class="image-grid">
+                    <div class="image-card">
+                        <img src="static/images/drone 0.jpg" alt="Lab Facility">
+                        <div class="image-overlay">
+                            <h3>Lab Facility</h3>
+                            <p>State-of-the-art drone research laboratory</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <img src="static/images/drone 2.jpg" alt="Research">
+                        <div class="image-overlay">
+                            <h3>Research</h3>
+                            <p>Cutting-edge drone technology research</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <img src="static/images/drone 4.jpg" alt="Equipment">
+                        <div class="image-overlay">
+                            <h3>Equipment</h3>
+                            <p>Advanced drone testing equipment</p>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section bg-light">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">{{ about.team_members }}</div>
+                <p>Team Members</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{ about.active_projects }}</div>
+                <p>Active Projects</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{ about.trained_interns }}</div>
+                <p>Trained Interns</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{ about.publications }}</div>
+                <p>Publications</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AGARC Lab</h3>
+                <p>Advancing drone & mobile robots technology through innovation and research.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/agarc-2a5b5b367/"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:agarc.cdrt@gmail.com"><i class="fab fa-google"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Lab Hours</h3>
+                <p>Monday-Friday : 10 AM - 5 PM</p>
+                <p>Saturday : By Appointment</p>
+                <p>Sunday : Closed</p>
+            </div>
+            
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; CDRT Lab IIT BHU. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename = 'script.js') }}"></script>
+</body>
+</html> 

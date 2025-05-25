@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Drone - CDRT : AGARC - IIT BHU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="static/images/logo.jpg" type="image/x-icon">
+    <style>
+        .edit-drone-section {
+            padding: 80px 0;
+            background: #ffffff;
+            min-height: 100vh;
+        }
+        .admin-card {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group label {
+            display: block;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+        }
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .current-image {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .related-media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .media-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .media-item img, .media-item video {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .delete-media-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .delete-media-btn:hover {
+            background: rgba(255, 0, 0, 0.9);
+        }
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: #0d6efd;
+            border: none;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #0b5ed7;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            border: none;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5c636a;
+            transform: translateY(-2px);
+        }
+        .section-title {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .file-input-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+        .file-input-label:hover {
+            background: #e9ecef;
+        }
+        .file-input-container {
+            margin-top: 10px;
+        }
+        .file-input-container input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo" style="display: flex; align-items: center; justify-content: center;">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" style="height: 60px; margin-right: 15px;">
+                <span style="font-size: 1.5rem;">CDRT : AGARC</span>
+            </a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="nav-links">
+                <a href="{{ url_for('admin_dashboard') }}" class="nav-link">Dashboard</a>
+                <a href="{{ url_for('admin_home') }}" class="nav-link">Home</a>
+                <a href="{{ url_for('admin_logout') }}" class="nav-link">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Edit Drone Section -->
+    <section class="edit-drone-section">
+        <div class="container">
+            <h2 class="section-title">Edit Experimental Setup</h2>
+            <div class="admin-card">
+                <form action="{{ url_for('edit_drone', drone_id=drone.id) }}" method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" value="{{ drone.title }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea class="form-control" id="description" name="description" required>{{ drone.description }}</textarea>
+                            </div>
+                            
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Current Main Image</label>
+                                <img src="{{ drone.image_url }}" alt="{{ drone.title }}" class="current-image">
+                                <label for="image" class="file-input-label">
+                                    <i class="fas fa-upload me-2"></i>Update Main Image
+                                </label>
+                                <input type="file" id="image" name="image" accept="image/*" class="form-control">
+                            </div>
+
+                            <!-- Related Media Section -->
+                            <div class="form-group">
+                                <label>Current Related Media</label>
+                                <div class="related-media-grid">
+                                    {% for media in drone.related_media %}
+                                    <div class="media-item">
+                                        {% if media.type == 'video' %}
+                                        <video controls>
+                                            <source src="{{ media.url }}" type="video/mp4">
+                                        </video>
+                                        {% else %}
+                                        <img src="{{ media.url }}" alt="Related media">
+                                        {% endif %}
+                                        <button type="button" onclick="deleteRelatedMedia('{{ media.id }}', '{{ drone.id }}')" class="delete-media-btn">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="file-input-container">
+                                    <label class="file-input-label">
+                                        <i class="fas fa-plus me-2"></i>Add New Related Media
+                                    </label>
+                                    <input type="file" name="related_images[]" accept="image/*" multiple class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('admin_home') }}" class="btn btn-secondary me-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    function deleteRelatedMedia(mediaId, droneId) {
+        console.log('Attempting to delete media with ID:', mediaId, 'from drone:', droneId);
+        if (confirm('Are you sure you want to delete this media?')) {
+            fetch(`/admin_home/delete_related_media/${droneId}/${mediaId}`, {
+                method: 'DELETE',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert(data.error || 'Error deleting media');
+                }
+            })
+            .catch(error => {
+                console.error('Error details:', error);
+                alert('Error deleting media. Please try again.');
+            });
+        }
+    }
+    </script>
+</body>
+</html> 

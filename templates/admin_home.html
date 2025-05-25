@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Home - CDRT Lab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background-color: #343a40;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        .sidebar .active {
+            background-color: #0d6efd;
+        }
+        .main-content {
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .image-preview {
+            max-width: 200px;
+            max-height: 150px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <h3 class="text-white text-center mb-4">Admin Panel</h3>
+                <nav>
+                    <a href="/admin_dashboard">
+                        <i class="fas fa-home me-2"></i> Dashboard
+                    </a>
+                    <a href="/admin_home" class="active">
+                        <i class="fas fa-home me-2"></i> Home
+                    </a>
+                    <a href="/admin_notice">
+                        <i class="fas fa-bullhorn me-2"></i> Notices
+                    </a>
+                    <a href="/admin_team">
+                        <i class="fas fa-users me-2"></i> Team
+                    </a>
+                    <a href="/admin_gallery">
+                        <i class="fas fa-images me-2"></i> Gallery
+                    </a>
+                    <a href="/admin_research">
+                        <i class="fas fa-flask me-2"></i> Research
+                    </a>
+                    <a href="/admin_about">
+                        <i class="fas fa-info-circle me-2"></i> About
+                    </a>
+                    <a href="/admin_messages">
+                        <i class="fas fa-envelope me-2"></i> Messages
+                    </a>
+                    <a href="/admin_logout" class="mt-5">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Manage Home Page</h2>
+                </div>
+
+                <!-- Sliding Images -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Sliding Images</h5>
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addSlideModal">
+                            <i class="fas fa-plus me-2"></i>Add Image
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Order</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for slide in slides %}
+                                    <tr>
+                                        <td>
+                                            <img src="{{ slide.image_url }}" class="image-preview" alt="Slide">
+                                        </td>
+                                        <td>{{ slide.order }}</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary" onclick="editSlide('{{ slide.id }}')">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" onclick="deleteSlide('{{ slide.id }}')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drone Management Section -->
+                <div class="admin-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="section-title">Manage Drones</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDroneModal">
+                            <i class="fas fa-plus me-2"></i>Add New Drone
+                        </button>
+                    </div>
+
+                    <!-- Existing Drones List -->
+                    <div class="admin-card mt-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {% for drone in drones %}
+                            <div class="drone-item bg-gray-800 rounded-lg p-4">
+                                <img src="{{ drone.image_url }}" alt="{{ drone.title }}" class="w-full h-48 object-cover rounded-lg mb-4">
+                                <h4 class="text-lg font-orbitron mb-2">{{ drone.title }}</h4>
+                                <p class="text-gray-300 mb-2">Creator: {{ drone.creator_name }}</p>
+                                <div class="flex space-x-2">
+                                    <a href="{{ url_for('edit_drone', drone_id=drone.id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    <button onclick="deleteDrone('{{ drone.id }}')" class="btn btn-sm btn-danger">Delete</button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Slide Modal -->
+    <div class="modal fade" id="addSlideModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Sliding Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addSlideForm" action="/admin_home/add_slide" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="slide_image" class="form-label">Image</label>
+                            <input type="file" class="form-control" id="slide_image" name="image" accept="image/*" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="slide_order" class="form-label">Display Order</label>
+                            <input type="number" class="form-control" id="slide_order" name="order" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" form="addSlideForm" class="btn btn-primary">Add Image</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Drone Modal -->
+    <div class="modal fade" id="addDroneModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Drone</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url_for('add_drone') }}" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" class="form-control" id="title" name="title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">Main Image</label>
+                                    <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Related Media (Optional)</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Images</label>
+                                            <input type="file" class="form-control" name="related_images[]" accept="image/*" multiple>
+                                            <small class="text-muted">You can select multiple images</small>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Videos</label>
+                                            <input type="file" class="form-control" name="related_videos[]" accept="video/*" multiple>
+                                            <small class="text-muted">You can select multiple videos</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Drone</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function editSlide(id) {
+            window.location.href = `/admin_home/edit_slide/${id}`;
+        }
+
+        function deleteSlide(id) {
+            if (confirm('Are you sure you want to delete this slide?')) {
+                fetch(`/admin_home/delete_slide/${id}`, {
+                    method: 'DELETE',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error deleting slide');
+                    }
+                });
+            }
+        }
+
+        function deleteDrone(droneId) {
+            if (confirm('Are you sure you want to delete this drone?')) {
+                fetch(`/admin_home/delete_drone/${droneId}`, {
+                    method: 'DELETE',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Error deleting drone');
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html> 

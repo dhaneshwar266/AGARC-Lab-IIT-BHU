@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - CDRT : AGARC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <link rel="icon" href="static/images/logo.jpg" type="image/x-icon">
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo" style="display: flex; align-items: center; justify-content: center;">
+                <img src="{{ url_for('static', filename='images/iitbhu.gif') }}" alt="Logo" style="height: 70px;">
+            </a>
+            <a href="{{ url_for('index') }}" class="logo" style="display: flex; align-items: center; justify-content: center;">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" style="height: 70px; margin-right: 15px;">
+                <span style="font-size: 1.5rem;">CDRT : AGARC</span>
+            </a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="nav-links">
+                <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+                <a href="{{ url_for('about') }}" class="nav-link">About the Lab</a>
+                <a href="{{ url_for('research') }}" class="nav-link">Research/Projects</a>
+                <a href="{{ url_for('team') }}" class="nav-link">Team</a>
+                <a href="{{ url_for('gallery') }}" class="nav-link">Gallery</a>
+                <a href="{{ url_for('contact') }}" class="nav-link">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background-image: url('static/images/cover photo.jpg'); background-size: cover; background-position: center; position: relative; min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+        <div class="hero-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%); backdrop-filter: blur(5px);"></div>
+        <div class="hero-content" style="position: relative; z-index: 1; text-align: center; max-width: 800px; padding: 2rem;">
+            <h1 style="font-size: 4rem; font-weight: 700; margin-bottom: 1.5rem; color: #ffffff; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Our Gallery</h1>
+            <div style="width: 80px; height: 4px; background: #ffffff; margin: 0 auto 2rem;"></div>
+            <p style="font-size: 1.5rem; color: #ffffff; margin-bottom: 2rem; line-height: 1.6;">Explore our drone technology and research through images</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                <a href="#masonry-gallery" class="btn" style="background: transparent; color: #ffffff; padding: 1rem 2rem; border: 2px solid #ffffff; border-radius: 30px; text-decoration: none; font-weight: 500; transition: all 0.3s ease;">View Images</a>
+                <a href="#video-grid" class="btn" style="background: transparent; color: #ffffff; padding: 1rem 2rem; border: 2px solid #ffffff; border-radius: 30px; text-decoration: none; font-weight: 500; transition: all 0.3s ease;">Watch Videos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Masonry Gallery -->
+    <section class="section" id="masonry-gallery">
+        <h2 class="section-title">Image Gallery</h2>
+        <div class="masonry-gallery">
+            {% for image in images %}
+            <div class="masonry-item">
+                <img src="{{ image.url }}" alt="{{ image.title }}">
+                <div class="masonry-overlay">
+                    <h3>{{ image.title }}</h3>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Video Gallery Section -->
+    <section class="section bg-light" id="video-grid">
+        <h2 class="section-title">Video Gallery</h2>
+        <div class="video-grid"> 
+            {% for video in videos %}
+            <div class="video-item">
+                <div class="video-thumbnail" onclick="openVideo('{{ video.video_url }}')">
+                    <video class="video-preview" muted>
+                        <source src="{{ video.video_url }}" type="video/mp4">
+                    </video>
+                    <!-- <div class="play-button" onclick="openVideo('{{ video.video_url }}')">
+                        <i class="fas fa-play"></i>
+                    </div> -->
+                    <div class="video-overlay"></div>
+                </div>
+                <div class="video-content">
+                    <h3>{{ video.title }}</h3>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Simple Video Modal -->
+    <div id="videoModal" class="video-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeVideo()">&times;</span>
+            <video id="modalVideo" controls autoplay>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AGARC Lab</h3>
+                <p>Advancing drone & mobile robots technology through innovation and research.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('research') }}">Research</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/agarc-2a5b5b367/"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:agarc.cdrt@gmail.com"><i class="fab fa-google"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; CDRT Lab IIT BHU. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <style>
+        .video-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .video-thumbnail {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .video-thumbnail video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2rem;
+            z-index: 2;
+        }
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+        .video-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .modal-content video {
+            width: 100%;
+            max-height: 80vh;
+        }
+        .close-modal {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #f1f1f1;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-modal:hover {
+            color: #bbb;
+        }
+    </style>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+    function openVideo(videoUrl) {
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('modalVideo');
+        const source = video.querySelector('source');
+        source.src = videoUrl;
+        video.load(); // Reload the video with new source
+        modal.style.display = "block";
+        video.play();
+    }
+
+    function closeVideo() {
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('modalVideo');
+        const source = video.querySelector('source');
+        video.pause();
+        source.src = "";
+        video.load(); // Clear the video source
+        modal.style.display = "none";
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('videoModal');
+        if (event.target == modal) {
+            closeVideo();
+        }
+    }
+
+    // Load video previews
+    document.addEventListener('DOMContentLoaded', function() {
+        const videoPreviews = document.querySelectorAll('.video-preview');
+        videoPreviews.forEach(video => {
+            video.addEventListener('loadeddata', function() {
+                video.currentTime = 0;
+            });
+        });
+    });
+    </script>
+</body>
+</html>
