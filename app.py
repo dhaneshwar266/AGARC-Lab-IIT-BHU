@@ -12,6 +12,20 @@ import cloudinary.uploader
 import cloudinary.api
 from dotenv import load_dotenv
 load_dotenv()
+import requests
+
+# couter for visits
+def get_user_country():
+    ip = request.remote_addr
+    if ip == '127.0.0.1':
+        ip = requests.get('https://api64.ipify.org').text
+    try:
+        res = requests.get(f'https://ipapi.co/{ip}/json/')
+        if res.status_code == 200:
+            return res.json().get('country_name', 'Unknown')
+    except:
+        pass
+    return 'Unknown'
 
 app = Flask(__name__)
 
@@ -64,6 +78,12 @@ def index():
     current_count = counter_ref.get() or 0
     counter_ref.set(current_count + 1)
     
+    # Country-wise count
+    country = get_user_country()
+    country_ref = db.reference(f'country_visits/{country}')
+    current_country_count = country_ref.get() or 0
+    country_ref.set(current_country_count + 1)
+    
     # Get active notices for the notice board
     notices_ref = db.reference('notices')
     notices = notices_ref.get()
@@ -101,11 +121,34 @@ def index():
             drone['id'] = key
             drones_list.append(drone)
     
+    # Fetch country-wise view counts
+    country_views_ref = db.reference('country_visits')
+    country_views = country_views_ref.get() or {}
+    # Remove 'Unknown' from top list unless needed
+    sorted_country_views = sorted(country_views.items(), key=lambda x: x[1], reverse=True)
+
+    # Always include India if it exists
+    top_countries = [item for item in sorted_country_views if item[0] != 'Unknown']
+    india_entry = next((item for item in sorted_country_views if item[0] == 'India'), None)
+
+    # Add India manually if not already in top_countries
+    if india_entry and india_entry not in top_countries:
+        top_countries.insert(0, india_entry)
+
+    # Limit to 5, include 'Unknown' if needed to fill
+    if len(top_countries) < 5:
+        unknown_entry = next((item for item in sorted_country_views if item[0] == 'Unknown'), None)
+    if unknown_entry:
+        top_countries.append(unknown_entry)
+
+    top_countries = top_countries[:5]        
+    
     return render_template('index.html', 
                          notices=active_notices,
                          slides=slides_list,
                          drones=drones_list,
-                         visit_count=current_count + 1)
+                         visit_count=current_count + 1,
+                         country_views=top_countries)
 
 @app.route('/about')
 def about():
