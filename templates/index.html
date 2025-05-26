@@ -163,10 +163,6 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; CDRT Lab IIT BHU. All rights reserved.</p>
-            <div class="counter-container" style="justify-content: center; margin: 0 auto;">
-                <span class="green-dot"></span>
-                <p><span id="visit-count">{{ visit_count }}</span> Total Views</p>
-            </div>
             <div class="footer-country-views" style="margin-top: 15px; text-align: center;">
                 <h4 style="margin-bottom: 5px;">Views by Country</h4>
                 <ul style="list-style: none; padding: 0;">
@@ -175,6 +171,11 @@
                     {% endfor %}
                 </ul>
             </div>
+            <div class="counter-container" style="justify-content: center; margin: 0 auto;">
+                <span class="green-dot"></span>
+                <p><span id="visit-count">{{ visit_count }}</span> Total Views</p>
+            </div>
+            
         </div>
     </footer>
 
