@@ -41,14 +41,8 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-home" style="background-image: url('static/images/coverphoto.jpg'); background-size:cover; background-position: center; position: static;">
-        <!-- <div class="hero-content" style="position: relative; z-index: 1; background-color: rgba(0, 0, 0, 0.5); padding: 2rem; border-radius: 10px;">
-            <h1 class="typing-animation" data-text="AERO GROUND AUTONOMY RESEARCH CENTER">AERO GROUND AUTONOMY RESEARCH CENTER</h1>
-            <p>Advancing Drone Technology Through Innovation and Research</p>
-            <div style="margin-top: 15rem;">
-                <a href="{{ url_for('about') }}" class="btn">Learn More</a>
-            </div>
-        </div>    -->
+    <section class="hero-home">
+        <img src="{{ url_for('static', filename='images/cover-photo.jpg') }}" class="hero-img" alt="Hero Image">
     </section>
 
     <!-- Sliding Images Section -->
