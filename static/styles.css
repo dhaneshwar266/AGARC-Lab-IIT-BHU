@@ -17,6 +17,7 @@ body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
+    overflow-x: hidden;
 }
 
 /* Header Styles */
@@ -109,6 +110,7 @@ body {
     width: 100%;
     height: auto;
     display: block;
+    max-width: 100%;
 }
 /* About Hero Section */
 .about-hero {
