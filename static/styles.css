@@ -1,4 +1,4 @@
-/* Custom CSS with animations and modern styling */
+
 :root {
     --primary-color: #2c3e50;
     --secondary-color: #3498db;
@@ -100,14 +100,16 @@ body {
 
 /* Home hero section */
 .hero-home {
-    min-height: auto;
-    min-width: auto;
     margin-top: 100px;
-    padding: 200px 0px;
+    padding: 200px 0;
     position: relative;
     overflow: hidden;
     background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
     color: #ffffff;
+    background-image: url('static/images/coverphoto.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 /* About Hero Section */
