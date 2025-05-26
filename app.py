@@ -16,16 +16,24 @@ import requests
 
 # couter for visits
 def get_user_country():
-    ip = request.remote_addr
-    if ip == '127.0.0.1':
-        ip = requests.get('https://api64.ipify.org').text
     try:
+        forwarded_for = request.headers.get('X-Forwarded-For', '')
+        ip = forwarded_for.split(',')[0] if forwarded_for else request.remote_addr
+
+        # Log to debug
+        print(f"Client IP: {ip}")
+
+        if ip.startswith('127.') or ip.startswith('10.') or ip.startswith('192.') or ip == '::1':
+            return 'Unknown'
+
         res = requests.get(f'https://ipapi.co/{ip}/json/')
         if res.status_code == 200:
-            return res.json().get('country_name', 'Unknown')
-    except:
-        pass
+            country = res.json().get('country_name')
+            return country if country else 'Unknown'
+    except Exception as e:
+        print("GeoIP error:", e)
     return 'Unknown'
+
 
 app = Flask(__name__)
 
