@@ -167,13 +167,13 @@
                 <h4 style="margin-bottom: 5px;">Views by Country</h4>
                 <ul style="list-style: none; padding: 0;">
                     {% for country, count in country_views[:5] %}  <!-- Top 5 countries -->
-                        <li style="font-size: 14px;">{{ country }}: {{ count }}</li>
+                        <li style="font-size: 14px;">{{ country }} : {{ count }}</li>
                     {% endfor %}
                 </ul>
             </div>
             <div class="counter-container" style="justify-content: center; margin: 0 auto;">
                 <span class="green-dot"></span>
-                <p><span id="visit-count">{{ visit_count }}</span> Total Views</p>
+                <p>Total Views : <span id="visit-count">{{ visit_count }}</span></p>
             </div>
             
         </div>
