@@ -67,6 +67,7 @@
                                         <th>Image</th>
                                         <th>Name</th>
                                         <th>Role</th>
+                                        <th>Role</th>
                                         <th>Email</th>
                                         <th>Order</th>
                                         <th>Actions</th>
@@ -84,6 +85,7 @@
                                         </td>
                                         <td>{{ member.name }}</td>
                                         <td>{{ member.role }}</td>
+                                        <td>{{ member.department }}</td>
                                         <td>{{ member.email }}</td>
                                         <td>{{ member.order }}</td>
                                         <td>
@@ -122,6 +124,10 @@
                         <div class="mb-3">
                             <label for="role" class="form-label">Role</label>
                             <input type="text" class="form-control" id="role" name="role" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="department" class="form-label">Department</label>
+                            <input type="text" class="form-control" id="department" name="department" required>
                         </div>
                        
                         <div class="mb-3">
