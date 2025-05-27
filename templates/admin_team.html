@@ -172,7 +172,7 @@
                                         <th>Image</th>
                                         <th>Name</th>
                                         <th>Role</th>
-                                        <th>Email</th>
+                                        <th>Department</th>
                                         <th>Order</th>
                                 
                                     </tr>
@@ -189,7 +189,7 @@
                                         </td>
                                         <td>{{ member.name }}</td>
                                         <td>{{ member.role }}</td>
-                                        <td>{{ member.email }}</td>
+                                        <td>{{ member.department }}</td>
                                         <td>{{ member.order }}</td>
                                         <td>
                                             <a href="/admin_faculty/edit/{{ member.id }}" class="btn btn-sm btn-primary">
@@ -275,7 +275,10 @@
                                         <label for="role" class="form-label">Role</label>
                                         <input type="text" class="form-control" id="role" name="role" required>
                                     </div>
-                                
+                                    <div class="mb-3">
+                                        <label for="department" class="form-label">Department</label>
+                                        <input type="text" class="form-control" id="department" name="department" required>
+                                    </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="email" name="email">
