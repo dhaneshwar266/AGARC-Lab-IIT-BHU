@@ -1247,7 +1247,7 @@ def add_faculty_member():
     
     name = request.form.get('name')
     role = request.form.get('role')
-
+    department = request.form.get('department')
     email = request.form.get('email')
     linkedin = request.form.get('linkedin')
 
@@ -1268,7 +1268,7 @@ def add_faculty_member():
     faculty_data = {
         'name': name,
         'role': role,
-
+        'department' : department,
         'email': email,
         'linkedin': linkedin,
 
@@ -1291,7 +1291,7 @@ def edit_faculty_member(member_id):
     if request.method == 'POST':
         name = request.form.get('name')
         role = request.form.get('role')
-
+        department = request.form.get('department')
         email = request.form.get('email')
         linkedin = request.form.get('linkedin')
 
@@ -1300,10 +1300,9 @@ def edit_faculty_member(member_id):
         faculty_data = {
             'name': name,
             'role': role,
-
+            'department' : department,
             'email': email,
             'linkedin': linkedin,
-
             'order': order
         }
         
