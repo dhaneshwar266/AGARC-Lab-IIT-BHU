@@ -859,14 +859,9 @@ h2.text-3xl {
         grid-template-columns: 1fr;
         
     }
-    .facility-item{
-        max-width: 800px;
-        margin: 0 auto; /* Center horizontally */
-        padding: 20px;
-    }
 
     .facilities-grid p{
-        text-align: justify;
+        
     }
 
     .stats-grid {
