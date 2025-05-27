@@ -43,7 +43,9 @@
             margin-bottom: 40px;
             text-align: justify;
         }
-        
+        .drone-description p {
+            text-align: justify;
+        }
         .related-media-section {
             margin-top: 40px;
         }
@@ -113,7 +115,7 @@
                 <div class="col-md-8 mx-auto">
                     <img src="{{ drone.image_url }}" alt="{{ drone.title }}" class="main-image">
                     <div class="drone-description">
-                        {{ drone.description }}
+                        <p>{{ drone.description }}</p>
                     </div>
 
                     {% if drone.related_media %}
