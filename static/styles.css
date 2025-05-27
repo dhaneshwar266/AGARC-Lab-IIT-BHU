@@ -966,6 +966,13 @@ h2.text-3xl {
     color: var(--primary-color);
 }
 
+.about-text p {
+    margin-bottom: 30px;
+    line-height: 1.8;
+    color: var(--text-color);
+    text-align: justify;
+}
+
 .facilities-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
