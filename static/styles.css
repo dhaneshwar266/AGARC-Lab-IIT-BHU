@@ -859,6 +859,10 @@ h2.text-3xl {
         grid-template-columns: 1fr;
     }
 
+    .facilities-grid p{
+        text-align: justify;
+    }
+
     .stats-grid {
         grid-template-columns: 1fr;
     }
