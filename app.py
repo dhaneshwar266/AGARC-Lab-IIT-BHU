@@ -170,7 +170,34 @@ def about():
             'team_members': 0,
             'active_projects': 0,
             'trained_interns': 0,
-            'publications': 0
+            'publications': 0,
+            'welcome_text': {
+                'title': 'Welcome to AGARC',
+                'content': 'The Aero-Ground Autonomy Research Center at the Department of Electrical Engineering, IIT (BHU) Varanasi is a pioneering hub for advanced research in autonomous systems. Established through the prestigious I-DAPT HUB Foundation grant under the project entitled "Centre for Development of Drone Related Technologies",2023, and in strategic collaboration with Quanser, the centre operates under the leadership of Prof. Shyam Kamal, the Principal Investigator. This centre stands at the forefront of innovation in aerial and ground robotics, intelligent control systems, and AI-driven autonomy. With a vibrant team of PhD scholars, MTech researchers, and several BTech project groups, it fosters a dynamic environment for cutting-edge research and hands-on technological development. Utilizing state-of-the-art platforms such as Quanser QDrone2 and QBot Platform, the centre is advancing the frontiers of swarm robotics, machine learning, and real-time autonomous navigation'
+            },
+            'facilities': [
+                {
+                    'icon': 'fas fa-helicopter',
+                    'title': 'UAV & UGV Platforms',
+                    'description': 'Advanced Unmanned Arial Vehical & Unmanned Ground Vehicle research platforms equipped with multisensor fusion and precision control'
+                },
+                {
+                    'icon': 'fas fa-users-cog',
+                    'title': 'Colaborative Research & Testing Facilities',
+                    'description': 'Industry-academia collaborative research hub advancing autonomous systems through shared innovation'
+                },
+                {
+                    'icon': 'fas fa-crosshairs',
+                    'title': 'High Precision Autonomous Systems',
+                    'description': 'High-resolution cameras and sensors'
+                },
+                {
+                    'icon': 'fas fa-laptop-code',
+                    'title': 'Software Lab',
+                    'description': 'Advanced programming and simulation tools'
+                }
+            ]
+        }
         }
     
     return render_template('about.html', about=about_data)
