@@ -998,6 +998,10 @@ h2.text-3xl {
     transform: translateY(-5px);
 }
 
+.facility-item p{
+    text-align: center;
+}
+
 .facility-item i {
     font-size: 2.5rem;
     color: var(--secondary-color);
