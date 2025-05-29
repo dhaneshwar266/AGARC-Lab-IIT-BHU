@@ -1358,12 +1358,35 @@ def update_about():
     active_projects = int(request.form.get('active_projects', 0))
     trained_interns = int(request.form.get('trained_interns', 0))
     publications = int(request.form.get('publications', 0))
+
+    # Get welcome text
+    welcome_title = request.form.get('welcome_title')
+    welcome_content = request.form.get('welcome_content')
+    
+    # Get facilities data
+    facilities = []
+    facility_titles = request.form.getlist('facility_title[]')
+    facility_descriptions = request.form.getlist('facility_description[]')
+    facility_icons = request.form.getlist('facility_icon[]')
+    
+    for i in range(len(facility_titles)):
+        if facility_titles[i] and facility_descriptions[i]:
+            facilities.append({
+                'title': facility_titles[i],
+                'description': facility_descriptions[i],
+                'icon': facility_icons[i]
+            })
     
     about_data = {
         'team_members': team_members,
         'active_projects': active_projects,
         'trained_interns': trained_interns,
-        'publications': publications
+        'publications': publications,
+        'welcome_text': {
+            'title': welcome_title,
+            'content': welcome_content
+        },
+        'facilities': facilities
     }
     
     about_ref = db.reference('about')
