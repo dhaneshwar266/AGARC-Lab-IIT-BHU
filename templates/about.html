@@ -45,20 +45,6 @@
             <div class="hero-text">
                 <h1>About Our Lab</h1>
                 <p class="subtitle">Advancing Drone & Mobile Robots Technology Research</p>
-                <!-- <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">10+</span>
-                        <span class="stat-label">Years Experience</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">50+</span>
-                        <span class="stat-label">Research Papers</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">20+</span>
-                        <span class="stat-label">Active Projects</span>
-                    </div>
-                </div> -->
             </div>
             <div class="hero-image">
                 <img src="static/images/lab.jpg" alt="Lab Facility">
@@ -70,35 +56,21 @@
     <section class="section">
         <div class="about-grid">
             <div class="about-text">
-                <h2>Welcom to <b>AGARC</b> </h2>
-                <p>The <b>Aero-Ground Autonomy Research Center</b> at the Department of Electrical Engineering, IIT (BHU) Varanasi is a pioneering hub for advanced research in autonomous systems. Established through the prestigious <b>I-DAPT HUB Foundation</b> grant under the project entitled <b>"Centre for Development of Drone Related Technologies"</b>,2023, and in strategic collaboration with Quanser, the centre operates under the leadership of <b>Prof. Shyam Kamal</b>, the Principal Investigator.
-This centre stands at the forefront of innovation in aerial and ground robotics, intelligent control systems, and AI-driven autonomy. With a vibrant team of PhD scholars, MTech researchers, and several BTech project groups, it fosters a dynamic environment for cutting-edge research and hands-on technological development. Utilizing state-of-the-art platforms such as <b>Quanser  QDrone2 and QBot Platform</b>, the centre is advancing the frontiers of swarm robotics, machine learning, and real-time autonomous navigation</p>
+                <h2>{{ about.welcome_text.title }}</h2>
+                <p>{{ about.welcome_text.content }}</p>
                 <br><h2>Our Facilities</h2>
-                <div class="facilities-grid">
+                <div class="facilities-container">
+                    {% for facility in about.facilities %}
                     <div class="facility-item">
-                        <i class="fas fa-helicopter" title="UAV"></i>
-                        <h3>UAV & UGV Platforms</h3>
-                        <p>Advanced Unmanned Arial Vehical & Unmanned Ground Vehicle research platforms equipped with multisensor fusion and precision control</p>
+                        <i class="{{ facility.icon }}" title="{{ facility.title }}"></i>
+                        <h3>{{ facility.title }}</h3>
+                        <p>{{ facility.description }}</p>
                     </div>
-                    <div class="facility-item">
-                        <i class="fas fa-users-cog"></i>
-                        <h3>Colaborative Research & Testing Facilities</h3>
-                        <p>Industry-academia collaborative research hub advancing autonomous systems through shared innovation</p>
-                    </div>
-                    <div class="facility-item">
-                        <i class="fas fa-crosshairs"></i>
-                        <h3>High Precision Autonomous Systems</h3>
-                        <p>High-resolution cameras and sensors</p>
-                    </div>
-                    <div class="facility-item">
-                        <i class="fas fa-laptop-code"></i>
-                        <h3>Software Lab</h3>
-                        <p>Advanced programming and simulation tools</p>
-                    </div>
+                    {% endfor %}
                 </div>
 
                 <h2>Our Approach</h2>
-                <p>We combine theoretical knowledge with practical experience, ensuring our students and researchers are well-equipped to tackle real-world challenges in drone technology. Our approach includes:</p>
+                <p style="text-align: justify;">We combine theoretical knowledge with practical experience, ensuring our students and researchers are well-equipped to tackle real-world challenges in drone technology. Our approach includes:</p>
                 <ul class="approach-list">
                     <li>Hands-on training with cutting-edge equipment</li>
                     <li>Collaborative research projects</li>
@@ -166,7 +138,7 @@ This centre stands at the forefront of innovation in aerial and ground robotics,
             <div class="footer-section">
                 <h3>Follow Us</h3>
                 <div class="social-icons">
-                    <a href="http://www.linkedin.com/in/agarc-iit-bhu-varanasi-2a5b5b367"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.linkedin.com/in/agarc-2a5b5b367/"><i class="fab fa-linkedin"></i></a>
                     <a href="mailto:agarc.cdrt@gmail.com"><i class="fab fa-google"></i></a>
                 </div>
             </div>
@@ -179,7 +151,7 @@ This centre stands at the forefront of innovation in aerial and ground robotics,
             
         </div>
         <div class="footer-bottom">
-            <p>&copy; AGARC Lab IIT (BHU), Varanasi. All rights reserved.</p>
+            <p>&copy; CDRT Lab IIT BHU. All rights reserved.</p>
         </div>
     </footer>
 
