@@ -164,9 +164,9 @@ def about():
     about_ref = db.reference('about')
     about_data = about_ref.get()
     
-    # Initialize default values if about_data is None
-    if about_data is None:
-        about_data = {
+   # Initialize default values if about_data is None or missing required fields
+    if about_data is None or 'welcome_text' not in about_data:
+        default_data = {
             'team_members': 0,
             'active_projects': 0,
             'trained_interns': 0,
@@ -198,7 +198,14 @@ def about():
                 }
             ]
         }
-        }
+        
+        # If about_data exists but is missing fields, merge with default data
+        if about_data is not None:
+            default_data.update(about_data)
+        
+        # Update the database with the complete structure
+        about_ref.set(default_data)
+        about_data = default_data
     
     return render_template('about.html', about=about_data)
 
