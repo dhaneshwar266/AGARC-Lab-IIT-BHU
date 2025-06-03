@@ -397,6 +397,13 @@
                 </div>
 
                 <!-- Team Members Grid -->
+                 <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Student Member</h5>
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addTeamLeadModal">
+                            <i class="fas fa-plus me-2"></i>Add Student Member
+                        </button>
+                    </div>
                 <div class="row">
                     {% for member in team_members %}
                     <div class="col-md-4 col-lg-3">
@@ -420,6 +427,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Add Member Modal -->
