@@ -149,7 +149,6 @@
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">{{ drone.title }}</h5>
-                                        <p class="card-text">{{ drone.creator_name }}</p>
                                         <div class="d-flex gap-2">
                                             <a href="{{ url_for('edit_drone', drone_id=drone.id) }}" class="btn btn-sm btn-primary">Edit</a>
                                             <button onclick="deleteDrone('{{ drone.id }}')" class="btn btn-sm btn-danger">Delete</button>
