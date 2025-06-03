@@ -133,14 +133,20 @@
 
                     <!-- Existing Drones List -->
                     <div class="admin-card mt-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="row">
                             {% for drone in drones %}
-                                <img src="{{ drone.image_url }}" alt="{{ drone.title }}" class="w-full h-48 object-cover rounded-lg mb-4">
-                                <h4 class="text-lg font-orbitron mb-2">{{ drone.title }}</h4>
-                                <p class="text-gray-300 mb-2">{{ drone.creator_name }}</p>
-                                <div class="flex space-x-2">
-                                    <a href="{{ url_for('edit_drone', drone_id=drone.id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                    <button onclick="deleteDrone('{{ drone.id }}')" class="btn btn-sm btn-danger">Delete</button>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <img src="{{ drone.image_url }}" alt="{{ drone.title }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ drone.title }}</h5>
+                                        <p class="card-text">{{ drone.creator_name }}</p>
+                                        <div class="d-flex gap-2">
+                                            <a href="{{ url_for('edit_drone', drone_id=drone.id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                            <button onclick="deleteDrone('{{ drone.id }}')" class="btn btn-sm btn-danger">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             {% endfor %}
                         </div>
