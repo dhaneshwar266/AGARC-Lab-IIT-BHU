@@ -1071,7 +1071,7 @@ h2.text-3xl {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 1.5rem;
-    padding: 1.5rem 0;
+    padding: 70px 5%;
 }
 
 .team-member {
