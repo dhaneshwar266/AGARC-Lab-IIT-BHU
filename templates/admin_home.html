@@ -137,7 +137,16 @@
                             {% for drone in drones %}
                             <div class="col-md-4 mb-4">
                                 <div class="card h-100">
-                                    <img src="{{ drone.image_url }}" alt="{{ drone.title }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                    <div class="position-relative">
+                                        <img src="{{ drone.image_url }}" alt="{{ drone.title }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                        {% if drone.related_images %}
+                                        <div class="related-images mt-2 d-flex gap-2 overflow-auto" style="max-height: 100px;">
+                                            {% for image in drone.related_images %}
+                                            <img src="{{ image }}" alt="Related image" class="rounded" style="height: 80px; width: 80px; object-fit: cover;">
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
                                     <div class="card-body">
                                         <h5 class="card-title">{{ drone.title }}</h5>
                                         <p class="card-text">{{ drone.creator_name }}</p>
@@ -278,3 +287,4 @@
     </script>
 </body>
 </html> 
+
