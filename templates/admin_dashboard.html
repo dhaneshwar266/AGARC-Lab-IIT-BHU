@@ -68,26 +68,6 @@
                     <a href="/admin_logout" id="logoutBtn" class="mt-5">
                         <i class="fas fa-sign-out-alt me-2"></i> Logout
                     </a>
-                        <script>
-                             document.getElementById('logoutBtn').addEventListener('click', (event) => {
-                             event.preventDefault(); // Prevent default anchor click
-
-                          // OPTIONAL: Call backend logout route
-                            fetch('/admin_logout', { method: 'GET' })
-                           .then(response => {
-                           if (response.ok) {
-                          // Redirect to home page after logout
-                          window.location.href = '/index.html';  // Change to '/' if deployed at root
-                          } else {
-                          alert('Logout failed. Try again.');
-                           }
-                         })
-                         .catch(error => {
-                          console.error('Error logging out:', error);
-                          alert('Logout error occurred.');
-                           });
-                          });
-                        </script>
                 </nav>
             </div>
 
