@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, session, flash, g, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, flash, g, jsonify, make_response
 from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash, check_password_hash
 import smtplib
@@ -81,8 +81,31 @@ app.secret_key = os.getenv("SECRET_KEY")  # Set a secret key for session managem
 
 @app.route('/')
 def index():
-    # Increment visit counter
+    response = make_response()  # Prepare response early
+# Check for existing visit cookie
+    has_visited = request.cookies.get('has_visited')
+
+    # Firebase visit count
     counter_ref = db.reference('visits')
+    current_count = counter_ref.get() or 0
+    
+    if not has_visited:
+        # Increment total view count only for new visitor
+        counter_ref.set(current_count + 1)
+        current_count += 1  # for rendering
+        response.set_cookie('has_visited', 'true', max_age=60*60*24*365)  # expires in 1 year
+
+    # Increment country-wise views too
+        country = get_user_country()
+        country_ref = db.reference(f'country_visits/{country}')
+        current_country_count = country_ref.get() or 0
+        country_ref.set(current_country_count + 1)
+    else:
+        # User already counted
+        country = get_user_country()
+    
+    # Increment visit counter
+    """counter_ref = db.reference('visits')
     current_count = counter_ref.get() or 0
     counter_ref.set(current_count + 1)
     
@@ -90,7 +113,7 @@ def index():
     country = get_user_country()
     country_ref = db.reference(f'country_visits/{country}')
     current_country_count = country_ref.get() or 0
-    country_ref.set(current_country_count + 1)
+    country_ref.set(current_country_count + 1)"""
     
     # Get active notices for the notice board
     notices_ref = db.reference('notices')
@@ -129,7 +152,7 @@ def index():
             drone['id'] = key
             drones_list.append(drone)
     
-    # Fetch country-wise view counts
+    """# Fetch country-wise view counts
     country_views_ref = db.reference('country_visits')
     country_views = country_views_ref.get() or {}
     # Remove 'Unknown' from top list unless needed
@@ -156,7 +179,28 @@ def index():
                          slides=slides_list,
                          drones=drones_list,
                          visit_count=current_count + 1,
-                         country_views=top_countries)
+                         country_views=top_countries)"""
+    
+    country_views_ref = db.reference('country_visits')
+    country_views = country_views_ref.get() or {}
+    sorted_country_views = sorted(country_views.items(), key=lambda x: x[1], reverse=True)
+    top_countries = [item for item in sorted_country_views if item[0] != 'Unknown']
+    india_entry = next((item for item in sorted_country_views if item[0] == 'India'), None)
+    if india_entry and india_entry not in top_countries:
+        top_countries.insert(0, india_entry)
+    if len(top_countries) < 5:
+        unknown_entry = next((item for item in sorted_country_views if item[0] == 'Unknown'), None)
+        if unknown_entry:
+            top_countries.append(unknown_entry)
+    top_countries = top_countries[:5]
+
+    response.set_data(render_template('index.html',
+                         notices=active_notices,
+                         slides=slides_list,
+                         drones=drones_list,
+                         visit_count=current_count,
+                         country_views=top_countries))
+    return response
 
 @app.route('/about')
 def about():
