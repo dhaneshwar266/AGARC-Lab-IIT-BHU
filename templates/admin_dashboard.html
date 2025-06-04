@@ -65,8 +65,27 @@
                     <a href="/admin_messages">
                         <i class="fas fa-envelope me-2"></i> Messages
                     </a>
-                    <a href="/admin_logout" class="mt-5">
+                    <a href="/admin_logout" id="logoutBtn" class="mt-5">
                         <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        <script>
+                            document.getElementById('logoutBtn').addEventListener('click', (event) => {
+                            event.preventDefault(); // Stop default link behavior
+
+                           // Optional: Clear session/local storage
+                           // localStorage.removeItem('authToken');
+
+                          // Optional: Make a logout API call to backend if needed
+                           fetch('/admin_logout')
+                          .then(() => {
+                          // Redirect to home page
+                          window.location.href = '/index.html';  // Or just '/' for root
+                           })
+                         .catch(err => {
+                          console.error('Logout failed:', err);
+                          alert('Failed to logout');
+                           });
+                         });
+                        </script>
                     </a>
                 </nav>
             </div>
