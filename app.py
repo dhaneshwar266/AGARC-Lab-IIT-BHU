@@ -439,16 +439,10 @@ def admin_login():
         return redirect('/admin_dashboard')
     return render_template('admin_login.html')
 
-"""@app.route('/admin_logout')
-def admin_logout():
-    session.pop('user_id', None)
-    return redirect('/admin_login')"""
-
 @app.route('/admin_logout')
 def admin_logout():
     session.pop('user_id', None)
-    return redirect('/')
-
+    return redirect('/admin_login')
 
 @app.route('/admin_dashboard')
 def admin_dashboard():
