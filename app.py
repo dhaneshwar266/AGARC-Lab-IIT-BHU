@@ -37,15 +37,6 @@ def get_user_country():
 
 app = Flask(__name__)
 
-@app.after_request
-def add_cache_control(response):
-    if request.path.startswith('/admin'):
-        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-        response.headers["Pragma"] = "no-cache"
-        response.headers["Expires"] = "0"
-    return response
-
-
 # Cloudinary configuration
 cloudinary.config(
     cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME") ,  # Replace with your cloud name
@@ -448,25 +439,15 @@ def admin_login():
         return redirect('/admin_dashboard')
     return render_template('admin_login.html')
 
-"""@app.route('/admin_logout')
-def admin_logout():
-    session.pop('user_id', None)
-    return redirect('/admin_login')"""
-
 @app.route('/admin_logout')
 def admin_logout():
     session.pop('user_id', None)
-    return redirect('/')
-
-"""@app.route('/admin_dashboard')
-def admin_dashboard():
-    if 'user_id' not in session:
-        return redirect('/admin_login')"""
+    return redirect('/admin_login')
 
 @app.route('/admin_dashboard')
 def admin_dashboard():
     if 'user_id' not in session:
-        return redirect('/')
+        return redirect('/admin_login')
     
     # Get counts for dashboard
     messages_ref = db.reference('messages')
