@@ -69,22 +69,24 @@
                         <i class="fas fa-sign-out-alt me-2"></i> Logout
                     </a>
                         <script>
-                            document.getElementById('logoutBtn').addEventListener('click', (event) => {
-                            event.preventDefault(); // Stop default link behavior
+                             document.getElementById('logoutBtn').addEventListener('click', (event) => {
+                             event.preventDefault(); // Prevent default anchor click
 
-                           // Optional: Clear session/local storage
-                           // localStorage.removeItem('authToken');
-
-                          // Optional: Make a logout API call to backend if needed
-            
-                          // Redirect to home page
-                          window.location.href = '/index.html';  // Or just '/' for root
-                           })
-                         .catch(err => {
-                          console.error('Logout failed:', err);
-                          alert('Failed to logout');
+                          // OPTIONAL: Call backend logout route
+                            fetch('/admin_logout', { method: 'GET' })
+                           .then(response => {
+                           if (response.ok) {
+                          // Redirect to home page after logout
+                          window.location.href = '/index.html';  // Change to '/' if deployed at root
+                          } else {
+                          alert('Logout failed. Try again.');
+                           }
+                         })
+                         .catch(error => {
+                          console.error('Error logging out:', error);
+                          alert('Logout error occurred.');
                            });
-                         });
+                          });
                         </script>
                 </nav>
             </div>
